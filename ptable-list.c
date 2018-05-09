@@ -1,4 +1,4 @@
-//   Программа для замены таблицы разделов в загрузчике usbloader
+//   Das Programm für die Ersatz Tabellen Abschnitte in der Bootloader usbloader
 // 
 // 
 #include <stdio.h>
@@ -19,22 +19,22 @@ struct ptable_t ptable;
 FILE* in;
 
 if (argc != 2) {
-    printf("\n - Не указано имя файла с таблицей разделов\n");
+    printf("\n - Nicht angezeigt Name Datei mit dem Tabelle Abschnitte\n");
     return;
 }  
 
 in=fopen(argv[optind],"r+");
 if (in == 0) {
-  printf("\n Ошибка открытия файла %s\n",argv[optind]);
+  printf("\n Fehler Entdeckungen Datei %s\n",argv[optind]);
   return;
 }
 
  
-// читаем текущую таблицу
+// lesen aktuell Diagramm
 fread(&ptable,sizeof(ptable),1,in);
 
 if (strncmp(ptable.head, "pTableHead", 16) != 0) {
-  printf("\n Файл не является таблицей разделов\n");
+  printf("\n Datei nicht ist das Tabelle Abschnitte\n");
   return ;
 }
   

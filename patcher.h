@@ -1,20 +1,20 @@
 
-// Структура, описывающая сигнатуру и положение патча
+// Struktur, beschreibend Unterschrift und Situation patch
 struct defpatch {
- const char* sig; // сигнатрура
- uint32_t sigsize; // длина сигнатуры
- int32_t poffset;  // смещение до точки патча от конца сигнатуры
+ const char* sig; // Signaturen
+ uint32_t sigsize; // Länge Signaturen
+ int32_t poffset;  // Vorurteil zu Punkte patch aus das Ende Signaturen
 };
 
 
 
 //***********************************************************************
-//* Поиск сигнатуры и наложение патча
+//* Suche Signaturen und Auferlegung patch
 //***********************************************************************
 uint32_t patch(struct defpatch fp, uint8_t* buf, uint32_t fsize, uint32_t ptype);
 
 //****************************************************
-//* Процедуры патча под разные чипсеты и задачи
+//* Verfahren patch unter dem anders Chipsätze und Aufgaben
 //****************************************************
 
 uint32_t pv7r22 (uint8_t* buf, uint32_t fsize);

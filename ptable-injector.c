@@ -1,4 +1,4 @@
-//   Программа для замены таблицы разделов в загрузчике usbloader
+//   Das Programm für die Ersatz Tabellen Abschnitte in der Bootloader usbloader
 // 
 // 
 #include <stdio.h>
@@ -30,14 +30,14 @@ while ((opt = getopt(argc, argv, "mr:hx")) != -1) {
   switch (opt) {
    case 'h': 
      
-printf("\n Утилита для замены таблицы разделов в загрузчиках usbloader\
-\n Модем должен находиться в режиме fastboot\
+printf("\n Dienstprogramm für die Ersatz Tabellen Abschnitte in der Lader usbloader\
+\n Modem sollte sei in der Modus fastboot\
 \n\n\
-%s [ключи] <имя файла usbloader>\n\n\
- Допустимы следующие ключи:\n\n\
--m       - показать текущую карту разделов в usbloader\n\
--x       - извлечь текущую карту в файл ptable.bin\n\
--r <file>- заменить карту разделов на карту из указанного файла\n\
+%s [Schlüssel] <Name Datei usbloader>\n\n\
+ Akzeptabel das Folgende Schlüssel:\n\n\
+-m       - zeigen aktuell Karte Abschnitte in der usbloader\n\
+-x       - auswerfen aktuell Karte in der Datei ptable.bin\n\
+-r <file>- ersetzen Karte Abschnitte von Karte von der die Datei\n\
 \n",argv[0]);
     return;
     
@@ -61,25 +61,25 @@ printf("\n Утилита для замены таблицы разделов в
   }  
 }  
 if (optind>=argc) {
-    printf("\n - Не указано имя файла загрузчика\n");
+    printf("\n - Nicht angezeigt Name Datei Bootloader\n");
     return;
 }  
 
 ldr=fopen(argv[optind],"r+");
 if (ldr == 0) {
-  printf("\n Ошибка открытия файла %s\n",argv[optind]);
+  printf("\n Fehler Entdeckungen Datei %s\n",argv[optind]);
   return;
 }
 
  
-// Ищем таблицу разделов в файле загрузчика  
+// Auf der Suche nach Diagramm Abschnitte in der Datei Bootloader  
 
 ptaddr=find_ptable(ldr);
 if (ptaddr == 0) {
-  printf("\n Таблица разделов в загрузчике не найдена\n");
+  printf("\n Tabelle Abschnitte in der Bootloader nicht gefunden\n");
   return ;
 }
-// читаем текущую таблицу
+// lesen aktuell Diagramm
 fread(&ptable,sizeof(ptable),1,ldr);
 
 if (xflag) {
@@ -98,15 +98,15 @@ if (mflag | xflag) return;
 if (rflag) { 
   in=fopen(ptfile,"r");
   if (in == 0) {
-    printf("\n Ошибка открытия файла %s",ptfile);
+    printf("\n Fehler Entdeckungen Datei %s",ptfile);
     return;
   }
   fread(&ptable,sizeof(ptable),1,in);
   fclose(in);
   
-  // проверяем файл
+  // überprüfen Datei
   if (memcmp(ptable.head,headmagic,16) != 0) {
-    printf("\n Входной файл не является таблицей разделов\n");
+    printf("\n Eingabe Datei nicht ist das Tabelle Abschnitte\n");
     return;
   }
   fseek(ldr,ptaddr,SEEK_SET);

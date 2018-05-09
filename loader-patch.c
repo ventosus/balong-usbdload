@@ -19,17 +19,17 @@ int oflag=0,bflag=0;
 uint32_t res;
 
 
-// Разбор командной строки
+// Parsing der Befehl Linien
 
 while ((opt = getopt(argc, argv, "o:bh")) != -1) {
   switch (opt) {
    case 'h': 
      
-printf("\n Программа для автоматического патча загрузчиков платформ Balong V7\n\n\
-%s [ключи] <файл загрузчика usbloader>\n\n\
- Допустимы следующие ключи:\n\n\
--o file  - имя выходного файла. По умолчанию производится только проверка возможности патча\n\
--b       - добавить патч, отключающий проверку дефектных блоков\n\
+printf("\n Das Programm für die automatisch patch Downloader Plattformen Balong V7\n\n\
+%s [Schlüssel] <Datei Bootloader usbloader>\n\n\
+ Akzeptabel das Folgende Schlüssel:\n\n\
+-o file  - Name Ausgabe Datei. Von Standard produziert nur testen Möglichkeiten patch\n\
+-b       - hinzufügen patch, abgeschnitten testen defekt Blöcke\n\
 \n",argv[0]);
     return;
 
@@ -49,25 +49,25 @@ printf("\n Программа для автоматического патча �
   }
 }  
 
-printf("\n Программа автоматической модификации загрузчиков Balong V7, (c) forth32");
+printf("\n Das Programm automatisch Änderungen Downloader Balong V7, (c) forth32");
 
  if (optind>=argc) {
-    printf("\n - Не указано имя файла для загрузки\n - Для подсказки укажите ключ -h\n");
+    printf("\n - Nicht angezeigt Name Datei für die Downloads\n - Für Tipps angeben Hinweis -h\n");
     return;
 }  
     
 in=fopen(argv[optind],"r");
 if (in == 0) {
-  printf("\n Ошибка открытия файла %s",argv[optind]);
+  printf("\n Fehler Entdeckungen Datei %s",argv[optind]);
   return;
 }
 
-// определяем размер файла
+// bestimmen Größe Datei
 fseek(in,0,SEEK_END);
 fsize=ftell(in);
 rewind(in);
 
-// выделяем буфер и читаем туда весь файл
+// hervorheben Puffer und lesen dort das Ganze Datei
 buf=malloc(fsize);
 fread(buf,1,fsize,in);
 fclose(in);
@@ -76,43 +76,43 @@ fclose(in);
 
 res=pv7r22_2(buf, fsize);
 if (res != 0)  {
-  printf("\n* Найдена сигнатура типа V7R22_2 по смещению %08x",res);
+  printf("\n* Gefunden Signatur eingeben V7R22_2 auf dem Vorurteil %08x",res);
   goto endpatch;
 }
 
 res=pv7r22(buf, fsize);
 if (res != 0)  {
-  printf("\n* Найдена сигнатура типа V7R22 по смещению %08x",res);
+  printf("\n* Gefunden Signatur eingeben V7R22 auf dem Vorurteil %08x",res);
   goto endpatch;
 }  
 
 res=pv7r1(buf, fsize);
 if (res != 0)  {
-  printf("\n* Найдена сигнатура типа V7R1 по смещению %08x",res);
+  printf("\n* Gefunden Signatur eingeben V7R1 auf dem Vorurteil %08x",res);
   goto endpatch;
 }  
 
 res=pv7r2(buf, fsize);
 if (res != 0)  {
-  printf("\n* Найдена сигнатура типа V7R2 по смещению %08x",res);
+  printf("\n* Gefunden Signatur eingeben V7R2 auf dem Vorurteil %08x",res);
   goto endpatch;
 }  
 
 res=pv7r11(buf, fsize);
 if (res != 0)  {
-  printf("\n* Найдена сигнатура типа V7R11 по смещению %08x",res);
+  printf("\n* Gefunden Signatur eingeben V7R11 auf dem Vorurteil %08x",res);
   goto endpatch;
 }   
 
-printf("\n! Сигнатура eraseall-патча не найдена");
+printf("\n! Unterschrift eraseall-patch nicht gefunden");
 
 //==================================================================================
 endpatch:
 
 if (bflag) {
    res=perasebad(buf, fsize);
-   if (res != 0) printf("\n* Найдена сигнатура isbad по смещению %08x",res);  
-   else  printf("\n! Сигнатура isbad не найдена");  
+   if (res != 0) printf("\n* Gefunden Signatur isbad auf dem Vorurteil %08x",res);  
+   else  printf("\n! Unterschrift isbad nicht gefunden");  
 }
 
 if (oflag) {
@@ -121,7 +121,7 @@ if (oflag) {
     fwrite(buf,1,fsize,out);
     fclose(out);
   }
-  else printf("\n Ошибка открытия выходного файла %s",outfilename);
+  else printf("\n Fehler Entdeckungen Ausgabe Datei %s",outfilename);
 }
 free(buf);
 printf("\n");
